@@ -1,34 +1,29 @@
 import { expect, test } from '@playwright/test'
-import { API_BASE_URL } from './api-urls'
+import { API_BASE_URL } from '../support/constants'
+import type { Rate } from '../support/types'
 
-type Rate = {
-  pair: string
-  rate: number
-  asOf: string
-}
+const expectedPairs = ['EUR/USD', 'GBP/USD', 'USD/CAD']
 
 test.describe('GET /api/rates', () => {
   test('returns valid rates for all supported currency pairs', async ({ request }) => {
-    test.skip(true, 'Xe monthly rate limit is currently exceeded')
-
     const response = await request.get(`${API_BASE_URL}/api/rates`)
     const body = await response.text()
 
-    expect(response.status(), `GET /api/rates returned ${response.status()}: ${body}`).toBe(200)
+    expect(response.status()).toBe(200)
 
-    const rates = JSON.parse(body) as Rate[]
+    const actualRates = JSON.parse(body) as Rate[]
 
-    expect(rates).toHaveLength(3)
-    expect(rates.map((rate) => rate.pair).sort()).toEqual([
-      'EUR/USD',
-      'GBP/USD',
-      'USD/CAD',
-    ])
+    expect(actualRates.map(({ pair }) => pair).sort()).toEqual(expectedPairs)
 
-    for (const rate of rates) {
-      expect(Number.isFinite(rate.rate)).toBe(true)
-      expect(rate.rate).toBeGreaterThan(0)
-      expect(Number.isNaN(Date.parse(rate.asOf))).toBe(false)
+    for (const actualRate of actualRates) {
+      expect(actualRate).toEqual({
+        pair: expect.any(String),
+        rate: expect.any(Number),
+        asOf: expect.any(String),
+      })
+      expect(Number.isFinite(actualRate.rate)).toBe(true)
+      expect(actualRate.rate).toBeGreaterThan(0)
+      expect(Number.isFinite(Date.parse(actualRate.asOf))).toBe(true)
     }
   })
 })

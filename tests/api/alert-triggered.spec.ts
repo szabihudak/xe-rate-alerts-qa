@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { API_BASE_URL } from './api-urls'
+import { API_BASE_URL } from '../support/constants'
 
 type Alert = {
   id: string

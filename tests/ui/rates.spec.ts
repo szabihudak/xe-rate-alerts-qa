@@ -1,10 +1,5 @@
 import { expect, test, type Page, type Route } from '@playwright/test'
-
-type Rate = {
-  pair: string
-  rate: number
-  asOf: string
-}
+import type { Rate } from '../support/types'
 
 const initialRates: Rate[] = [
   { pair: 'USD/CAD', rate: 1.2345, asOf: '2026-10-05T00:00:00Z' },
