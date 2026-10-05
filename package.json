@@ -1,0 +1,20 @@
+{
+  "name": "xe-hiring-takehome",
+  "version": "1.0.0",
+  "description": "A small app that displays live exchange rates, backed by the Xe Currency Data API. Your take-home brief explains what to build on top of it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:api": "npx playwright test tests/api --project=chromium",
+    "test:ui": "npx playwright test tests/ui --project=chromium",
+    "test:ui:headed": "npx playwright test tests/ui --project=chromium --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4"
+  }
+}
