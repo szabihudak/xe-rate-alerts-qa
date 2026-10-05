@@ -4,7 +4,7 @@
   "description": "A small app that displays live exchange rates, backed by the Xe Currency Data API. Your take-home brief explains what to build on top of it.",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
+    "test": "npm run test:api && npm run test:ui",
     "test:api": "npx playwright test tests/api --project=chromium",
     "test:ui": "npx playwright test tests/ui --project=chromium",
     "test:ui:headed": "npx playwright test tests/ui --project=chromium --headed"
