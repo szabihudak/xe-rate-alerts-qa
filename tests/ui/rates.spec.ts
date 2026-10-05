@@ -18,26 +18,7 @@ const refreshedRates: Rate[] = [
   { pair: 'EUR/USD', rate: 1.0987, asOf: '2026-10-05T00:00:00Z' },
 ]
 
-async function fulfillRates(route: Route, rates: Rate[]) {
-  await route.fulfill({
-    status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify(rates),
-  })
-}
 
-async function expectRatesDisplayed(page: Page, actualRates: Rate[]) {
-  for (const actualRate of actualRates) {
-    const pairLabel = actualRate.pair.replace('/', ' / ')
-    const card = page.locator('.card').filter({ hasText: pairLabel })
-    await expect(card.locator('.rate')).toHaveText(actualRate.rate.toFixed(4))
-  }
-}
-
-function isRatesRequest(response: { url(): string; request(): { method(): string } }) {
-  const url = new URL(response.url())
-  return url.pathname === '/api/rates' && response.request().method() === 'GET'
-}
 
 test.describe('Rates UI', () => {
   test('shows the rates returned on initial page load', async ({ page }) => {
@@ -84,3 +65,24 @@ test.describe('Rates UI', () => {
     await expect(updatedLabel).toBeVisible()
   })
 })
+
+async function fulfillRates(route: Route, rates: Rate[]) {
+  await route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(rates),
+  })
+}
+
+async function expectRatesDisplayed(page: Page, actualRates: Rate[]) {
+  for (const actualRate of actualRates) {
+    const pairLabel = actualRate.pair.replace('/', ' / ')
+    const card = page.locator('.card').filter({ hasText: pairLabel })
+    await expect(card.locator('.rate')).toHaveText(actualRate.rate.toFixed(4))
+  }
+}
+
+function isRatesRequest(response: { url(): string; request(): { method(): string } }) {
+  const url = new URL(response.url())
+  return url.pathname === '/api/rates' && response.request().method() === 'GET'
+}
