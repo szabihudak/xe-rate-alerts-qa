@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { API_BASE_URL } from './api-urls'
 
 type Alert = {
   id: string
@@ -15,7 +16,7 @@ type TriggerScenario = {
   expectedTriggered: boolean
 }
 
-const alertsUrl = 'http://localhost:5180/api/alerts'
+const alertsUrl = `${API_BASE_URL}/api/alerts`
 
 const scenarios: TriggerScenario[] = [
   { pair: 'USD/CAD', threshold: 1.3, direction: 'above', expectedTriggered: true },

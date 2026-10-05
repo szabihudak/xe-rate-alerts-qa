@@ -8,6 +8,9 @@ export default defineConfig({
     ['list'],
     ['html', { open: 'never' }],
   ],
+  use: {
+    baseURL: 'http://127.0.0.1:5173',
+  },
   projects: [
     {
       name: 'chromium',

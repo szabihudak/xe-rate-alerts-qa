@@ -25,7 +25,7 @@ test.describe('Rates UI', () => {
     await page.route('**/api/rates', (route) => fulfillRates(route, initialRates))
 
     const responsePromise = page.waitForResponse(isRatesRequest)
-    await page.goto('http://127.0.0.1:5173/')
+    await page.goto('/')
 
     const response = await responsePromise
     expect(response.ok()).toBe(true)
@@ -46,7 +46,7 @@ test.describe('Rates UI', () => {
     })
 
     const initialResponsePromise = page.waitForResponse(isRatesRequest)
-    await page.goto('http://127.0.0.1:5173/')
+    await page.goto('/')
 
     const initialResponse = await initialResponsePromise
     expect(initialResponse.ok()).toBe(true)
